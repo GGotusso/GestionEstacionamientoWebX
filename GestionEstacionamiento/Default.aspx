@@ -4,8 +4,6 @@
     <!-- Como hereda de Site.master no necesita repetir html, lo ponemos como contenido -->
     <asp:Label ID="lblBienvenida" runat="server" CssClass="h4" ForeColor="Green" />
 
-    <asp:Button ID="btnLogout" runat="server" Text="Cerrar sesión" OnClick="btnLogout_Click" CssClass="btn btn-danger mb-4" />
-    
     <div class="row row-cols-1 row-cols-md-3 g-4">
 
         <div class="col">
@@ -27,13 +25,21 @@
 
                     <a href="WebForms/AgregarReserva.aspx" class="btn btn-primary mb-2 w-100">Generar reserva</a>
                     <a href="WebForms/ModificarReserva.aspx" class="btn btn-secondary w-100">Modificar reserva</a>
+                
+    
+    
                 </div>
             </div>
         </div>
 
-        <!-- Más módulos proximamente -->
-       
+    </div>
+     <!-- Más módulos proximamente -->
 
+
+
+    <!-- Aplico bootstrap ->Activo flexbox en el contenedor, empujo el contenido hacia la derecha con justify, agrego un margen para separar del otro div -->
+    <div class="d-flex justify-content-end mt-4">
+    <asp:Button ID="btnLogout" runat="server" Text="Cerrar sesión" CssClass="btn btn-danger" OnClick="btnLogout_Click" />
     </div>
 
 </asp:Content>
