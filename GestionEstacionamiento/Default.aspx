@@ -25,9 +25,49 @@
 
                     <a href="WebForms/AgregarReserva.aspx" class="btn btn-primary mb-2 w-100">Generar reserva</a>
                     <a href="WebForms/ModificarReserva.aspx" class="btn btn-secondary w-100">Modificar reserva</a>
-                
-    
-    
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarifa -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Tarifa</h5>
+                    <a href="WebForms/Tarifa.aspx" class="btn btn-primary w-100">Gestionar tarifa</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recibo -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Recibo</h5>
+                    <a href="WebForms/Recibo.aspx" class="btn btn-primary w-100">Generar recibo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Reportes</h5>
+                    <a href="WebForms/Reportes.aspx" class="btn btn-primary w-100">Ver reportes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestionar espacios -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Gestionar espacios</h5>
+                    <a href="WebForms/GestionarEspacios.aspx" class="btn btn-primary w-100">Administrar espacios</a>
                 </div>
             </div>
         </div>
