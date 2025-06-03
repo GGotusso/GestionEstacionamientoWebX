@@ -155,6 +155,10 @@
     <Content Include="WebForms\ModificarCliente.aspx" />
     <Content Include="WebForms\ModificarReserva.aspx" />
     <Content Include="WebForms\NuevoUsuario.aspx" />
+    <Content Include="WebForms\Tarifa.aspx" />
+    <Content Include="WebForms\Recibo.aspx" />
+    <Content Include="WebForms\Reportes.aspx" />
+    <Content Include="WebForms\GestionarEspacios.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -278,6 +282,34 @@
     </Compile>
     <Compile Include="WebForms\NuevoUsuario.aspx.designer.cs">
       <DependentUpon>NuevoUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\Tarifa.aspx.cs">
+      <DependentUpon>Tarifa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\Tarifa.aspx.designer.cs">
+      <DependentUpon>Tarifa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\Recibo.aspx.cs">
+      <DependentUpon>Recibo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\Recibo.aspx.designer.cs">
+      <DependentUpon>Recibo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\Reportes.aspx.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\Reportes.aspx.designer.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\GestionarEspacios.aspx.cs">
+      <DependentUpon>GestionarEspacios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\GestionarEspacios.aspx.designer.cs">
+      <DependentUpon>GestionarEspacios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
