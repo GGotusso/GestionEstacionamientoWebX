@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Services;
 using Services.Logic;
 using Services.DOMAIN;
+using Services.Facade;
 
 namespace GestionEstacionamiento.WebForms
 {
@@ -24,7 +25,7 @@ namespace GestionEstacionamiento.WebForms
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             //Crea una instancia de la clase UsuarioAccess
-            UsuarioAccess usuarioService = new UsuarioAccess();
+            UserService usuarioService = new UserService();
             // Llama al método para validar las credenciales del usuario ingresado
             // Usa .Trim() para eliminar espacios en blanco
             Usuario usuario = usuarioService.ValidarLogin(txtUser.Text.Trim(), txtPass.Text.Trim());

@@ -42,10 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\UsuarioDAL.cs" />
+    <Compile Include="DAL\Contracts\IGenericServiceDAL.cs" />
+    <Compile Include="DAL\Contracts\IUsuarioDAL.cs" />
+    <Compile Include="DAL\FactoryServices\FactoryDAL.cs" />
+    <Compile Include="DAL\Implementations\SqlServer\FamiliaRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlServer\Helpers\SqlHelper.cs" />
+    <Compile Include="DAL\Implementations\SqlServer\UsuarioRepositorio.cs" />
+    <Compile Include="DOMAIN\Acesso.cs" />
+    <Compile Include="DOMAIN\Familia.cs" />
+    <Compile Include="DOMAIN\Patente.cs" />
     <Compile Include="DOMAIN\Usuario.cs" />
-    <Compile Include="Logic\CryptographicService.cs" />
-    <Compile Include="Logic\UsuarioAccess.cs" />
+    <Compile Include="DTO\UsuarioFamiliaDTO.cs" />
+    <Compile Include="Facade\CryptographyService.cs" />
+    <Compile Include="Facade\FamiliaService.cs" />
+    <Compile Include="Facade\UserService.cs" />
+    <Compile Include="Logic\FamliaLogic.cs" />
+    <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
