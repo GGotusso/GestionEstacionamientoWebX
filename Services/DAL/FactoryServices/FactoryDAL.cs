@@ -19,7 +19,11 @@ namespace Services.DAL.FactoryServices
         /// </summary>
         static FactoryDAL()
         {
-            backendType = int.Parse(ConfigurationManager.AppSettings["BackendType"]);
+            var configValue = ConfigurationManager.AppSettings["BackendType"];
+            if (!int.TryParse(configValue, out backendType))
+            {
+                backendType = (int)BackendType.SqlServer;
+            }
         }
         /// <summary>
         /// Obtiene una instancia del repositorio de usuario según el backend configurado.

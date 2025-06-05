@@ -1,5 +1,6 @@
 ﻿using Services.DAL;
 using Services.DOMAIN;
+using Services.Facade;
 using Services.Logic;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,16 @@ namespace GestionEstacionamiento.WebForms
                 PhoneNumber = txtTel.Text.Trim()
             };
 
-            UsuarioDAL dal = new UsuarioDAL();
-            bool exito = dal.InsertarUsuario(nuevoUsuario);
-
-            lblResultado.Text = exito ? "Usuario creado exitosamente." : "Error al crear usuario.";
+            UserLogic userLogic = new UserLogic();
+            try
+            {
+                userLogic.CreateUser(nuevoUsuario, txtPass.Text.Trim());
+                lblResultado.Text = "Usuario creado exitosamente.";
+            }
+            catch (Exception)
+            {
+                lblResultado.Text = "Error al crear usuario.";
+            }
         }
     }
 }
