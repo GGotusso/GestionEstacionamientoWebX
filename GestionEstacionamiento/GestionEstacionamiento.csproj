@@ -159,6 +159,7 @@
     <Content Include="WebForms\Recibo.aspx" />
     <Content Include="WebForms\Reportes.aspx" />
     <Content Include="WebForms\GestionarEspacios.aspx" />
+    <Content Include="WebForms\GestionarUsuarios.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -310,6 +311,13 @@
     </Compile>
     <Compile Include="WebForms\GestionarEspacios.aspx.designer.cs">
       <DependentUpon>GestionarEspacios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\GestionarUsuarios.aspx.cs">
+      <DependentUpon>GestionarUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\GestionarUsuarios.aspx.designer.cs">
+      <DependentUpon>GestionarUsuarios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
