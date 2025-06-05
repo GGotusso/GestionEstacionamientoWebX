@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Services;
-using Services.Logic;
 using Services.DOMAIN;
 using Services.Facade;
 
@@ -24,17 +22,15 @@ namespace GestionEstacionamiento.WebForms
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            //Crea una instancia de la clase UsuarioAccess
-            UserService usuarioService = new UserService();
-            // Llama al método para validar las credenciales del usuario ingresado
-            // Usa .Trim() para eliminar espacios en blanco
-            Usuario usuario = usuarioService.ValidarLogin(txtUser.Text.Trim(), txtPass.Text.Trim());
+            string username = txtUser.Text.Trim();
+            string password = txtPass.Text.Trim();
 
-            if (usuario != null)
+            bool isValid = UserService.Login(username, password);
+
+            if (isValid)
             {
-                // Guarda el objeto Usuario en sesión para usarlo en otras páginas
+                Usuario usuario = UserService.GetUsuarioByUsername(username);
                 Session["Usuario"] = usuario;
-                // Redirige a la página principal (Default.aspx)
                 Response.Redirect("~/Default.aspx");
             }
             else
