@@ -65,6 +65,7 @@ namespace GestionEstacionamiento.WebForms
                 FamiliaService.RemoverFamiliaDeUsuario(userId, famId);
                 ddlUsuarios_SelectedIndexChanged(sender, e);
                 lblMensaje.Text = "Rol quitado.";
+                lblMensaje.CssClass = "text-danger"; // Rojo
             }
         }
     }
