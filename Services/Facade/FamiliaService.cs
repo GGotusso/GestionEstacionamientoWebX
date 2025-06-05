@@ -39,6 +39,11 @@ namespace Services.Facade
         {
             _familiaLogic.ActualizarFamiliasDeUsuario(usuarioId, familias);
         }
+
+        public static void RemoverFamiliaDeUsuario(Guid usuarioId, Guid familiaId)
+        {
+            _familiaLogic.RemoverFamiliaDeUsuario(usuarioId, familiaId);
+        }
         public static List<Familia> GetAllFamilias()
         {
             return _familiaLogic.GetAllFamilias();

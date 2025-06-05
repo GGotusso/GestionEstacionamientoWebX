@@ -52,6 +52,11 @@ namespace Services.Logic
         {
             _familiaRepository.UpdateUsuarioFamilia(usuarioId, familias);
         }
+
+        public void RemoverFamiliaDeUsuario(Guid usuarioId, Guid familiaId)
+        {
+            _familiaRepository.RemoveUsuarioFamilia(usuarioId, familiaId);
+        }
         /// <summary>
         /// Obtiene todas las familias disponibles.
         /// </summary>

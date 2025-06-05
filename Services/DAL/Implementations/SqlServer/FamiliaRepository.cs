@@ -111,6 +111,16 @@ namespace Services.DAL.Implementations.SqlServer
                 SaveUsuarioFamilia(usuarioId, familia.Id);
             }
         }
+
+        public void RemoveUsuarioFamilia(Guid usuarioId, Guid familiaId)
+        {
+            SqlHelper.ExecuteNonQuery(
+                "DELETE FROM Usuario_Familia WHERE IdUsuario = @IdUsuario AND IdFamilia = @IdFamilia",
+                CommandType.Text,
+                new SqlParameter("@IdUsuario", usuarioId),
+                new SqlParameter("@IdFamilia", familiaId)
+            );
+        }
         public List<Familia> GetAll()
         {
             List<Familia> familias = new List<Familia>();
