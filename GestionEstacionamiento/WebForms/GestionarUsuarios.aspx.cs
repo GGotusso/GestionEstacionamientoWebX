@@ -52,9 +52,14 @@ namespace GestionEstacionamiento.WebForms
         {
             if (Guid.TryParse(ddlUsuarios.SelectedValue, out Guid userId) && Guid.TryParse(lbRolesDisponibles.SelectedValue, out Guid famId))
             {
-                FamiliaService.AsignarFamiliaAUsuario(userId, new Familia { Id = famId });
-                ddlUsuarios_SelectedIndexChanged(sender, e);
-                lblMensaje.Text = "Rol agregado.";
+                
+                if (Session["Usuario"] is Usuario UsuarioActual)
+                {
+                    LogService.WriteLog(TraceLevel.Info, $"{UsuarioActual.UserName} asigno la familia {lbRolesDisponibles.SelectedItem.Text} al usuario {ddlUsuarios.SelectedItem.Text}");
+                    FamiliaService.AsignarFamiliaAUsuario(userId, new Familia { Id = famId });
+                    ddlUsuarios_SelectedIndexChanged(sender, e);
+                    lblMensaje.Text = "Rol agregado.";
+                }
 
             }
         }
@@ -63,10 +68,16 @@ namespace GestionEstacionamiento.WebForms
         {
             if (Guid.TryParse(ddlUsuarios.SelectedValue, out Guid userId) && Guid.TryParse(lbRolesAsignados.SelectedValue, out Guid famId))
             {
-                FamiliaService.RemoverFamiliaDeUsuario(userId, famId);
-                ddlUsuarios_SelectedIndexChanged(sender, e);
-                lblMensaje.Text = "Rol quitado.";
-                lblMensaje.CssClass = "text-danger"; // Rojo
+
+                if (Session["Usuario"] is Usuario UsuarioActual)
+                {
+                    FamiliaService.RemoverFamiliaDeUsuario(userId, famId);
+                    ddlUsuarios_SelectedIndexChanged(sender, e);
+                    lblMensaje.Text = "Rol quitado.";
+                    lblMensaje.CssClass = "text-danger"; // Rojo
+                    LogService.WriteLog(TraceLevel.Info, $"{UsuarioActual.UserName} quito la familia {lbRolesAsignados.SelectedItem.Text} del usuario {ddlUsuarios.SelectedItem.Text}");
+                }
+
             }
         }
     }
