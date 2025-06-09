@@ -17,6 +17,8 @@ namespace Services.DAL.Implementations.SqlServer
         {
             SqlHelper.ExecuteNonQuery(ConnectionName,
 
+                "INSERT INTO Log (Date, TraceLevel, Message) VALUES (@Date, @TraceLevel, @Message)",
+                CommandType.Text,
                 new SqlParameter("@Date", entry.Date),
                 new SqlParameter("@TraceLevel", entry.Level.ToString()),
                 new SqlParameter("@Message", entry.Message));
