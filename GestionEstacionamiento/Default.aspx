@@ -78,6 +78,16 @@
             </div>
         </div>
 
+        <!-- Panel administrador -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Administración</h5>
+                    <a href="WebForms/PanelAdministrador.aspx" class="btn btn-primary w-100">Backup/Restore</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Gestionar usuarios -->
         <div class="col">
             <div class="card shadow-sm">
