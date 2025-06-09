@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container py-4" style="max-width: 900px;">
-        <h3 class="mb-4 text-center">Bitácora</h3>
+        <h3 class="mb-4 text-center">Bitacora</h3>
         <div class="row mb-3">
             <div class="col-md-3">
                 <asp:Label runat="server" Text="Desde" AssociatedControlID="txtDesde" />

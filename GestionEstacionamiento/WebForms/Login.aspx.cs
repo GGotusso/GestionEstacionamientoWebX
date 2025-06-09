@@ -29,7 +29,7 @@ namespace GestionEstacionamiento.WebForms
 
             if (isValid)
             {
-                LogService.WriteLog(TraceLevel.Info, $"{username} ingreso a la plataforma");
+                LogService.WriteLog(TraceLevel.Info, $"{username} ingreso al sistema");
                 Usuario usuario = UserService.GetUsuarioByUsername(username);
                 Session["Usuario"] = usuario;
                 Response.Redirect("~/Default.aspx");

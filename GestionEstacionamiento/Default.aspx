@@ -68,6 +68,16 @@
             </div>
         </div>
 
+                <!-- Gestionar Bitacora -->
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Bitacora</h5>
+                    <a href="WebForms/Bitacora.aspx" class="btn btn-primary w-100">Bitacora</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Gestionar usuarios -->
         <div class="col">
             <div class="card shadow-sm">
