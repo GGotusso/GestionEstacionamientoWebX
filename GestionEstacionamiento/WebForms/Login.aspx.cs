@@ -29,12 +29,14 @@ namespace GestionEstacionamiento.WebForms
 
             if (isValid)
             {
+                LogService.WriteLog(TraceLevel.Info, $"{username} ingreso a la plataforma");
                 Usuario usuario = UserService.GetUsuarioByUsername(username);
                 Session["Usuario"] = usuario;
                 Response.Redirect("~/Default.aspx");
             }
             else
             {
+                LogService.WriteLog(TraceLevel.Warning, $"Intento fallido de login para {username}");
                 lblError.Text = "Usuario o contraseña incorrectos.";
             }
         }
