@@ -12,6 +12,7 @@ namespace GestionEstacionamiento.WebForms
     public partial class PanelAdministrador
     {
         protected global::System.Web.UI.WebControls.TextBox txtRuta;
+        protected global::System.Web.UI.WebControls.FileUpload fuRestore;
         protected global::System.Web.UI.WebControls.Button btnBackup;
         protected global::System.Web.UI.WebControls.Button btnRestore;
         protected global::System.Web.UI.WebControls.Label lblMensaje;

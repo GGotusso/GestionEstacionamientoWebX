@@ -1,5 +1,6 @@
 using Services.Facade;
 using System;
+using System.IO;
 using System.Web.UI;
 
 namespace GestionEstacionamiento.WebForms
@@ -10,10 +11,26 @@ namespace GestionEstacionamiento.WebForms
         {
             try
             {
-                string path = txtRuta.Text.Trim();
-                BackupService.BackupDatabase("User_Conecction", path);
-                BackupService.BackupDatabase("Log_Conecction", path);
-                lblMensaje.Text = "Backup realizado";
+                string folder = txtRuta.Text.Trim();
+                if (string.IsNullOrWhiteSpace(folder))
+                {
+                    lblMensaje.Text = "Debe ingresar la carpeta donde guardar el backup";
+                    return;
+                }
+
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+
+                string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                string userFile = Path.Combine(folder, $"Usuario_{timestamp}.bak");
+                string logFile = Path.Combine(folder, $"Log_{timestamp}.bak");
+
+                BackupService.BackupDatabase("User_Conecction", userFile);
+                BackupService.BackupDatabase("Log_Conecction", logFile);
+
+                lblMensaje.Text = $"Backup realizado en {folder}";
             }
             catch (Exception ex)
             {
@@ -25,9 +42,20 @@ namespace GestionEstacionamiento.WebForms
         {
             try
             {
-                string path = txtRuta.Text.Trim();
-                BackupService.RestoreDatabase("User_Conecction", path);
-                BackupService.RestoreDatabase("Log_Conecction", path);
+                if (!fuRestore.HasFile)
+                {
+                    lblMensaje.Text = "Debe seleccionar un archivo de backup";
+                    return;
+                }
+
+                string tempPath = Server.MapPath($"~/App_Data/{Path.GetFileName(fuRestore.FileName)}");
+                fuRestore.SaveAs(tempPath);
+
+                BackupService.RestoreDatabase("User_Conecction", tempPath);
+                BackupService.RestoreDatabase("Log_Conecction", tempPath);
+
+                File.Delete(tempPath);
+
                 lblMensaje.Text = "Restauración completada";
             }
             catch (Exception ex)
