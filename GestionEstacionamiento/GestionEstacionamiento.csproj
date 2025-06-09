@@ -159,6 +159,7 @@
     <Content Include="WebForms\GestionarEspacios.aspx" />
     <Content Include="WebForms\GestionarUsuarios.aspx" />
     <Content Include="WebForms\Bitacora.aspx" />
+    <Content Include="WebForms\PanelAdministrador.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -310,6 +311,13 @@
     </Compile>
     <Compile Include="WebForms\Bitacora.aspx.designer.cs">
       <DependentUpon>Bitacora.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\PanelAdministrador.aspx.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\PanelAdministrador.aspx.designer.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

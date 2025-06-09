@@ -13,6 +13,7 @@ namespace Services.DAL.FactoryServices
     {
         private static IUsuarioDAL _UsuarioRepository;
         private static ILogDAL _LogRepository;
+        private static IBackupDAL _BackupRepository;
         private static readonly int backendType;
         private static readonly object _lock = new object();
         /// <summary>
@@ -77,6 +78,31 @@ namespace Services.DAL.FactoryServices
                     }
                 }
                 return _LogRepository;
+            }
+        }
+
+        public static IBackupDAL BackupRepository
+        {
+            get
+            {
+                if (_BackupRepository == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_BackupRepository == null)
+                        {
+                            switch ((BackendType)backendType)
+                            {
+                                case BackendType.SqlServer:
+                                    _BackupRepository = new BackupRepository();
+                                    break;
+                                default:
+                                    throw new NotSupportedException("Backend no soportado.");
+                            }
+                        }
+                    }
+                }
+                return _BackupRepository;
             }
         }
     }
