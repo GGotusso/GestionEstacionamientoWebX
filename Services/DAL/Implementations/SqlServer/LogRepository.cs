@@ -16,9 +16,7 @@ namespace Services.DAL.Implementations.SqlServer
         public void AddLog(LogEntry entry)
         {
             SqlHelper.ExecuteNonQuery(ConnectionName,
-                "INSERT INTO Log (IdLog, Date, TraceLevel, Message) VALUES (@IdLog, @Date, @TraceLevel, @Message)",
-                CommandType.Text,
-                new SqlParameter("@IdLog", entry.IdLog),
+
                 new SqlParameter("@Date", entry.Date),
                 new SqlParameter("@TraceLevel", entry.Level.ToString()),
                 new SqlParameter("@Message", entry.Message));
@@ -57,7 +55,7 @@ namespace Services.DAL.Implementations.SqlServer
                 {
                     logs.Add(new LogEntry
                     {
-                        IdLog = reader.GetGuid(0),
+
                         Date = reader.GetDateTime(1),
                         Level = (TraceLevel)Enum.Parse(typeof(TraceLevel), reader.GetString(2)),
                         Message = reader.GetString(3)
