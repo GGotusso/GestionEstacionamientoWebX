@@ -37,6 +37,24 @@ namespace Services.DAL.Implementations.SqlServer.Helpers
             }
         }
 
+        public static Int32 ExecuteNonQuery(string connectionName, string commandText,
+            CommandType commandType, params SqlParameter[] parameters)
+        {
+            CheckNullables(parameters);
+            string cs = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = commandType;
+                    cmd.Parameters.AddRange(parameters);
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private static void CheckNullables(SqlParameter[] parameters)
         {
             foreach (SqlParameter item in parameters)
@@ -67,6 +85,22 @@ namespace Services.DAL.Implementations.SqlServer.Helpers
             }
         }
 
+        public static Object ExecuteScalar(string connectionName, string commandText,
+            CommandType commandType, params SqlParameter[] parameters)
+        {
+            string cs = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = commandType;
+                    cmd.Parameters.AddRange(parameters);
+                    conn.Open();
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+
         /// <summary>
         /// Set the connection, command, and then execute the command with query and return the reader.
         /// </summary>
@@ -88,6 +122,21 @@ namespace Services.DAL.Implementations.SqlServer.Helpers
                 return reader;
             }
         }
+
+        public static SqlDataReader ExecuteReader(string connectionName, string commandText,
+            CommandType commandType, params SqlParameter[] parameters)
+        {
+            string cs = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+            SqlConnection conn = new SqlConnection(cs);
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = commandType;
+                cmd.Parameters.AddRange(parameters);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                return reader;
+            }
+        }
         public static DataTable ExecuteDataTable(string commandText, CommandType commandType, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(conString))
@@ -105,6 +154,28 @@ namespace Services.DAL.Implementations.SqlServer.Helpers
                     {
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);  // Llenar el DataTable con los resultados de la consulta
+                        return dt;
+                    }
+                }
+            }
+        }
+
+        public static DataTable ExecuteDataTable(string connectionName, string commandText, CommandType commandType, params SqlParameter[] parameters)
+        {
+            string cs = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = commandType;
+                    if (parameters != null)
+                    {
+                        cmd.Parameters.AddRange(parameters);
+                    }
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
                         return dt;
                     }
                 }

@@ -44,20 +44,25 @@
   <ItemGroup>
     <Compile Include="DAL\Contracts\IGenericServiceDAL.cs" />
     <Compile Include="DAL\Contracts\IUsuarioDAL.cs" />
+    <Compile Include="DAL\Contracts\ILogDAL.cs" />
     <Compile Include="DAL\FactoryServices\FactoryDAL.cs" />
     <Compile Include="DAL\Implementations\SqlServer\FamiliaRepository.cs" />
     <Compile Include="DAL\Implementations\SqlServer\Helpers\SqlHelper.cs" />
     <Compile Include="DAL\Implementations\SqlServer\UsuarioRepositorio.cs" />
+    <Compile Include="DAL\Implementations\SqlServer\LogRepository.cs" />
     <Compile Include="DOMAIN\Acesso.cs" />
     <Compile Include="DOMAIN\Familia.cs" />
     <Compile Include="DOMAIN\Patente.cs" />
     <Compile Include="DOMAIN\Usuario.cs" />
+    <Compile Include="DOMAIN\LogEntry.cs" />
     <Compile Include="DTO\UsuarioFamiliaDTO.cs" />
     <Compile Include="Facade\CryptographyService.cs" />
     <Compile Include="Facade\FamiliaService.cs" />
     <Compile Include="Facade\UserService.cs" />
+    <Compile Include="Facade\LogService.cs" />
     <Compile Include="Logic\FamliaLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
+    <Compile Include="Logic\LogLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
