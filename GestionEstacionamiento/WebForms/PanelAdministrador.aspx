@@ -4,8 +4,12 @@
     <div class="container py-4" style="max-width: 600px;">
         <h3 class="mb-4 text-center">Panel Administrador</h3>
         <div class="mb-3">
-            <asp:Label runat="server" Text="Ruta de backup" AssociatedControlID="txtRuta" />
+            <asp:Label runat="server" Text="Carpeta de backup" AssociatedControlID="txtRuta" />
             <asp:TextBox ID="txtRuta" runat="server" CssClass="form-control" />
+        </div>
+        <div class="mb-3">
+            <asp:Label runat="server" Text="Archivo para restaurar" AssociatedControlID="fuRestore" />
+            <asp:FileUpload ID="fuRestore" runat="server" CssClass="form-control" />
         </div>
         <div class="d-flex justify-content-between">
             <asp:Button ID="btnBackup" runat="server" Text="Crear Backup" CssClass="btn btn-primary" OnClick="btnBackup_Click" />
