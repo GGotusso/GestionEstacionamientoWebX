@@ -12,6 +12,7 @@ namespace Services.DAL.FactoryServices
     internal class FactoryDAL
     {
         private static IUsuarioDAL _UsuarioRepository;
+        private static ILogDAL _LogRepository;
         private static readonly int backendType;
         private static readonly object _lock = new object();
         /// <summary>
@@ -51,6 +52,31 @@ namespace Services.DAL.FactoryServices
                     }
                 }
                 return _UsuarioRepository;
+            }
+        }
+
+        public static ILogDAL LogRepository
+        {
+            get
+            {
+                if (_LogRepository == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_LogRepository == null)
+                        {
+                            switch ((BackendType)backendType)
+                            {
+                                case BackendType.SqlServer:
+                                    _LogRepository = new LogRepository();
+                                    break;
+                                default:
+                                    throw new NotSupportedException("Backend no soportado.");
+                            }
+                        }
+                    }
+                }
+                return _LogRepository;
             }
         }
     }
