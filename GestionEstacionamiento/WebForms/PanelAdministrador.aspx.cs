@@ -31,6 +31,7 @@ namespace GestionEstacionamiento.WebForms
                 BackupService.BackupDatabase("Log_Conecction", logFile);
 
                 lblMensaje.Text = $"Backup realizado en {folder}";
+            
             }
             catch (Exception ex)
             {
@@ -56,7 +57,6 @@ namespace GestionEstacionamiento.WebForms
 
                 File.Delete(tempPath);
 
-                lblMensaje.Text = "Restauración completada";
             }
             catch (Exception ex)
             {

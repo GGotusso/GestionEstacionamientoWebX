@@ -32,21 +32,33 @@ namespace Services.DAL.Implementations.SqlServer
             string databaseName = builder.InitialCatalog;
             builder.InitialCatalog = "master";
             string masterCs = builder.ToString();
+
             using (SqlConnection conn = new SqlConnection(masterCs))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE", conn))
+
+                try
                 {
-                    cmd.ExecuteNonQuery();
+                    // Forzamos modo SINGLE_USER
+                    using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE", conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Ejecutamos restore
+                    using (SqlCommand cmd = new SqlCommand($"RESTORE DATABASE [{databaseName}] FROM DISK = @Path WITH REPLACE", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Path", backupPath);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                using (SqlCommand cmd = new SqlCommand($"RESTORE DATABASE [{databaseName}] FROM DISK = @Path WITH REPLACE", conn))
+                finally
                 {
-                    cmd.Parameters.AddWithValue("@Path", backupPath);
-                    cmd.ExecuteNonQuery();
-                }
-                using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET MULTI_USER", conn))
-                {
-                    cmd.ExecuteNonQuery();
+                    // Pase lo que pase, volvemos a MULTI_USER
+                    using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET MULTI_USER", conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
         }
