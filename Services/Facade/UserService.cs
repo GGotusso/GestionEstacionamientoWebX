@@ -68,5 +68,16 @@ namespace Services.Facade
         {
             _userLogic.ChangePassword(username, newPassword);
         }
+        public static void RecalcularDVHUsuarios()
+        {
+            _userLogic.RecalcularDVHUsuariosExistentes();
+        }
+
+        public static bool HayErroresDeIntegridad()
+        {
+            return _userLogic.HayErroresDeIntegridad();
+        }
+
+
     }
 }

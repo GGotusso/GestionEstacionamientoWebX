@@ -88,13 +88,14 @@ namespace Services.DAL.Implementations.SqlServer
         public void CreateUsuario(Usuario usuario)
         {
             SqlHelper.ExecuteNonQuery(
-                "INSERT INTO Usuario (IdUsuario, UserName, Password, Estado, PhoneNumber) VALUES (@IdUsuario, @UserName, @Password, @Estado, @PhoneNumber)",
+                "INSERT INTO Usuario (IdUsuario, UserName, Password, Estado, PhoneNumber, DVH) VALUES (@IdUsuario, @UserName, @Password, @Estado, @PhoneNumber, @DVH)",
                 CommandType.Text,
                 new SqlParameter("@IdUsuario", usuario.IdUsuario),
                 new SqlParameter("@UserName", usuario.UserName),
                 new SqlParameter("@Password", usuario.Password),
                 new SqlParameter("@Estado", (int)EstadoUsuario.Habilitado),
-                new SqlParameter("@PhoneNumber", usuario.PhoneNumber)
+                new SqlParameter("@PhoneNumber", usuario.PhoneNumber),
+                new SqlParameter("@DVH", usuario.DVH)
             );
         }
 
@@ -138,42 +139,6 @@ namespace Services.DAL.Implementations.SqlServer
         }
 
 
-        public void SetOTP(Guid idUsuario, string otp, DateTime expiry)
-        {
-            SqlHelper.ExecuteNonQuery(
-                "UPDATE Usuario SET OTP = @OTP, OTPExpiry = @OTPExpiry WHERE IdUsuario = @IdUsuario",
-                CommandType.Text,
-                new SqlParameter("@OTP", otp),
-                new SqlParameter("@OTPExpiry", expiry),
-                new SqlParameter("@IdUsuario", idUsuario)
-            );
-        }
-
-        public Usuario GetUsuarioByUsernameWithOTP(string username)
-        {
-            Usuario usuario = null;
-
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(
-                "SELECT IdUsuario, UserName, Password, Estado, OTP, OTPExpiry FROM Usuario WHERE UserName = @UserName",
-                CommandType.Text,
-                new SqlParameter("@UserName", username)))
-            {
-                if (reader.Read())
-                {
-                    usuario = new Usuario
-                    {
-                        IdUsuario = reader.GetGuid(0),
-                        UserName = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        Estado = reader.GetString(3),
-                        OTP = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        OTPExpiry = reader.IsDBNull(5) ? (DateTime?)null : reader.GetDateTime(5)
-                    };
-                }
-            }
-
-            return usuario;
-        }
 
         public void UpdatePassword(Guid idUsuario, string newPassword)
         {
@@ -253,6 +218,17 @@ namespace Services.DAL.Implementations.SqlServer
                 new SqlParameter("@Nombre", patente.Nombre),
                 new SqlParameter("@DataKey", patente.DataKey),
                 new SqlParameter("@TipoAcceso", (int)patente.TipoAcceso) // Convertimos el enum a entero
+            );
+        }
+
+
+        public void ActualizarDVH(Guid idUsuario, string dvh)
+        {
+            SqlHelper.ExecuteNonQuery(
+                "UPDATE Usuario SET DVH = @DVH WHERE IdUsuario = @IdUsuario",
+                CommandType.Text,
+                new SqlParameter("@DVH", dvh),
+                new SqlParameter("@IdUsuario", idUsuario)
             );
         }
 

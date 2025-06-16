@@ -63,6 +63,7 @@
     <Compile Include="Facade\UserService.cs" />
     <Compile Include="Facade\LogService.cs" />
     <Compile Include="Facade\BackupService.cs" />
+    <Compile Include="Helpers\RolesHelper.cs" />
     <Compile Include="Logic\FamliaLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Logic\LogLogic.cs" />

@@ -51,29 +51,16 @@ namespace Services.DAL.Contracts
         /// <returns>Una lista de <see cref="UsuarioFamiliaDTO"/> que representa los usuarios con sus familias asociadas.</returns>
         List<UsuarioFamiliaDTO> GetUsuariosConFamilias();
 
-        /// <summary>
-        /// Establece un código OTP para un usuario con una fecha de expiración.
-        /// </summary>
-        /// <param name="idUsuario">El ID del usuario.</param>
-        /// <param name="otp">El código OTP a establecer.</param>
-        /// <param name="expiry">La fecha de expiración del código OTP.</param>
-        void SetOTP(Guid idUsuario, string otp, DateTime expiry);
 
-        /// <summary>
-        /// Obtiene un usuario por su nombre de usuario, incluyendo su información de OTP.
-        /// </summary>
-        /// <param name="username">El nombre de usuario.</param>
-        /// <returns>El usuario correspondiente, si existe, con su OTP.</returns>
-        Usuario GetUsuarioByUsernameWithOTP(string username);
 
-        /// <summary>
-        /// Actualiza la contraseña de un usuario.
-        /// </summary>
-        /// <param name="idUsuario">El ID del usuario.</param>
-        /// <param name="newPassword">La nueva contraseña.</param>
         void UpdatePassword(Guid idUsuario, string newPassword);
 
-
+        /// <summary>
+        /// Actualiza el DVH (Dígito Verificador Horizontal) de un usuario.
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="dvh"></param>
+        void ActualizarDVH(Guid idUsuario, string dvh);
 
 
     }

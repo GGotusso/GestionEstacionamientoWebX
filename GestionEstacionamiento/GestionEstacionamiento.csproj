@@ -160,6 +160,7 @@
     <Content Include="WebForms\GestionarUsuarios.aspx" />
     <Content Include="WebForms\Bitacora.aspx" />
     <Content Include="WebForms\PanelAdministrador.aspx" />
+    <Content Include="WebForms\VerificarIntegridad.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -318,6 +319,13 @@
     </Compile>
     <Compile Include="WebForms\PanelAdministrador.aspx.designer.cs">
       <DependentUpon>PanelAdministrador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\VerificarIntegridad.aspx.cs">
+      <DependentUpon>VerificarIntegridad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\VerificarIntegridad.aspx.designer.cs">
+      <DependentUpon>VerificarIntegridad.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

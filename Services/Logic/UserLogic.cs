@@ -66,8 +66,14 @@ namespace Services.Logic
 
 
             }
-
+            //Hash de la contraseña en texto plano
             usuario.Password = CryptographyService.HashMd5(plainPassword);
+            // Asignar el estado del usuario como habilitado (1)
+            usuario.Estado = ((int)Usuario.EstadoUsuario.Habilitado).ToString();
+
+            // Calcular DVH con los campos ya definidos
+            usuario.DVH = CryptographyService.CalcularDVH(usuario);
+
             _usuarioRepository.CreateUsuario(usuario);
         }
         /// <summary>
@@ -139,6 +145,38 @@ namespace Services.Logic
                 _usuarioRepository.UpdatePassword(usuario.IdUsuario, hashedPassword);
             }
         }
+
+        /// <summary>
+        /// Recalcula el DVH (Dígito Verificador Horizontal) para todos los usuarios existentes.
+        /// </summary>
+        public void RecalcularDVHUsuariosExistentes()
+        {
+            var usuarios = _usuarioRepository.GetAll(); // Este método debe retornar UserName, Password, Estado y PhoneNumber
+
+            foreach (var usuario in usuarios)
+            {
+                var usuarioCompleto = _usuarioRepository.GetUsuarioByUsername(usuario.UserName); // Asegurarte de que trae todos los campos
+                usuarioCompleto.DVH = CryptographyService.CalcularDVH(usuarioCompleto);
+                _usuarioRepository.ActualizarDVH(usuarioCompleto.IdUsuario, usuarioCompleto.DVH);
+            }
+        }
+
+        //Error de integridad: Verifica si el DVH de cada usuario es correcto
+        public bool HayErroresDeIntegridad()
+        {
+            var usuarios = _usuarioRepository.GetAll();
+
+            foreach (var usuario in usuarios)
+            {
+                var completo = _usuarioRepository.GetUsuarioByUsername(usuario.UserName);
+                string dvh = CryptographyService.CalcularDVH(completo);
+                if (completo.DVH != dvh)
+                    return true;
+            }
+
+            return false;
+        }
+
 
     }
 }

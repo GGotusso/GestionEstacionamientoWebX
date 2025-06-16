@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Services.DOMAIN;
+using Services.Facade;
+using Services.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Services.DOMAIN;
-using Services.Facade;
 
 namespace GestionEstacionamiento.WebForms
 {
@@ -29,14 +30,31 @@ namespace GestionEstacionamiento.WebForms
 
             if (isValid)
             {
-                LogService.WriteLog(TraceLevel.Info, $"{username} ingreso al sistema");
                 Usuario usuario = UserService.GetUsuarioByUsername(username);
                 Session["Usuario"] = usuario;
+
+                if (UserService.HayErroresDeIntegridad())
+                {
+                    if (RolesHelper.EsAdministrador(usuario))
+                    {
+                        // Redirigir al panel de verificación
+                        Session["UsuarioPendiente"] = usuario;
+                        Response.Redirect("~/VerificarIntegridad.aspx");
+                        return;
+                    }
+                    else
+                    {
+                        LogService.WriteLog(TraceLevel.Warning, $"Operador detectó errores de integridad: {username}");
+                        lblError.Text = "Contacte al administrador: los datos del sistema parecen estar corruptos.";
+                        return;
+                    }
+                }
+
+                LogService.WriteLog(TraceLevel.Info, $"{username} ingresó al sistema");
                 Response.Redirect("~/Default.aspx");
             }
             else
             {
-                LogService.WriteLog(TraceLevel.Warning, $"Intento fallido de login para {username}");
                 lblError.Text = "Usuario o contraseña incorrectos.";
             }
         }

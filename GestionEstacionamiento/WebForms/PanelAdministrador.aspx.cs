@@ -39,6 +39,19 @@ namespace GestionEstacionamiento.WebForms
             }
         }
 
+        //Utilizado para recalcular el DVH de todos los usuarios si cambio la logica del DVH o se agregaron nuevos campos
+        protected void btnRecalcularDVH_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UserService.RecalcularDVHUsuarios();
+                lblMensaje.Text = "DVH de todos los usuarios recalculado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = $"Error al recalcular DVH: {ex.Message}";
+            }
+        }
         protected void btnRestore_Click(object sender, EventArgs e)
         {
             try

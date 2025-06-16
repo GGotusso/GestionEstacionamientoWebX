@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.DOMAIN;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,6 +68,13 @@ namespace Services.Facade
                 }
             }
             return cipherText;
+        }
+
+        public static string CalcularDVH(Usuario usuario)
+        {
+            // Concatenás los campos importantes para integridad
+            string datos = $"{usuario.UserName}{usuario.Password}{usuario.Estado}{usuario.PhoneNumber}";
+            return HashMd5(datos);
         }
     }
 }

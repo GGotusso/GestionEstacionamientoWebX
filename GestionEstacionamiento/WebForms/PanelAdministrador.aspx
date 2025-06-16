@@ -14,6 +14,8 @@
         <div class="d-flex justify-content-between">
             <asp:Button ID="btnBackup" runat="server" Text="Crear Backup" CssClass="btn btn-primary" OnClick="btnBackup_Click" />
             <asp:Button ID="btnRestore" runat="server" Text="Restaurar" CssClass="btn btn-danger" OnClick="btnRestore_Click" />
+            <asp:Button ID="btnRecalcularDVH" runat="server" Text="Recalcular DVH" CssClass="btn btn-warning" OnClick="btnRecalcularDVH_Click" />
+
         </div>
         <div class="mt-3">
             <asp:Label ID="lblMensaje" runat="server" />

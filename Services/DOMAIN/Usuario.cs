@@ -19,8 +19,8 @@ namespace Services.DOMAIN
         public List<Acceso> Accesos = new List<Acceso>();
 
         public string PhoneNumber { get; set; } // Nuevo campo
-        public string OTP { get; set; } // Nuevo campo
-        public DateTime? OTPExpiry { get; set; } // Nuevo campo
+
+        public string DVH { get; set; } // Campo para el DVH (Digito verificadorr horizontal)
 
         public Usuario()
         {
