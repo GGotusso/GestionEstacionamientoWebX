@@ -56,20 +56,28 @@ namespace GestionEstacionamiento.WebForms
         {
             try
             {
-                if (!fuRestore.HasFile)
+                if (!fuRestoreUsuario.HasFile || !fuRestoreLog.HasFile)
                 {
-                    lblMensaje.Text = "Debe seleccionar un archivo de backup";
+                    lblMensaje.Text = "Debe seleccionar ambos archivos de backup (Usuario y Log)";
                     return;
                 }
 
-                string tempPath = Server.MapPath($"~/App_Data/{Path.GetFileName(fuRestore.FileName)}");
-                fuRestore.SaveAs(tempPath);
+                // Guardamos temporalmente los dos archivos
+                string tempPathUsuario = Server.MapPath($"~/App_Data/{Path.GetFileName(fuRestoreUsuario.FileName)}");
+                string tempPathLog = Server.MapPath($"~/App_Data/{Path.GetFileName(fuRestoreLog.FileName)}");
 
-                BackupService.RestoreDatabase("User_Conecction", tempPath);
-                BackupService.RestoreDatabase("Log_Conecction", tempPath);
+                fuRestoreUsuario.SaveAs(tempPathUsuario);
+                fuRestoreLog.SaveAs(tempPathLog);
 
-                File.Delete(tempPath);
+                // Restauramos cada base con su archivo correspondiente
+                BackupService.RestoreDatabase("User_Conecction", tempPathUsuario);
+                BackupService.RestoreDatabase("Log_Conecction", tempPathLog);
 
+                // Borramos los archivos temporales
+                File.Delete(tempPathUsuario);
+                File.Delete(tempPathLog);
+
+                lblMensaje.Text = "Restauración completada correctamente.";
             }
             catch (Exception ex)
             {

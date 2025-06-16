@@ -24,7 +24,6 @@ namespace Services.DAL.Implementations.SqlServer
                 }
             }
         }
-
         public void RestoreDatabase(string connectionName, string backupPath)
         {
             string cs = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
@@ -37,24 +36,58 @@ namespace Services.DAL.Implementations.SqlServer
             {
                 conn.Open();
 
+                // Obtener nombres lógicos del backup
+                string logicalDataName = null;
+                string logicalLogName = null;
+
+                using (SqlCommand cmd = new SqlCommand($"RESTORE FILELISTONLY FROM DISK = @Path", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Path", backupPath);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string type = reader["Type"].ToString();
+                            if (type == "D")
+                                logicalDataName = reader["LogicalName"].ToString();
+                            else if (type == "L")
+                                logicalLogName = reader["LogicalName"].ToString();
+                        }
+                    }
+                }
+
+                // Rutas físicas actuales de la base de datos
+                string dataFilePath = $@"C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\{databaseName}.mdf";
+                string logFilePath = $@"C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\{databaseName}_log.ldf";
+
                 try
                 {
-                    // Forzamos modo SINGLE_USER
+                    // Forzar SINGLE_USER para cerrar conexiones
                     using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE", conn))
                     {
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Ejecutamos restore
-                    using (SqlCommand cmd = new SqlCommand($"RESTORE DATABASE [{databaseName}] FROM DISK = @Path WITH REPLACE", conn))
+                    // Restaurar con MOVE
+                    using (SqlCommand cmd = new SqlCommand($@"
+                RESTORE DATABASE [{databaseName}]
+                FROM DISK = @Path
+                WITH REPLACE,
+                     MOVE @LogicalDataName TO @DataPath,
+                     MOVE @LogicalLogName TO @LogPath", conn))
                     {
                         cmd.Parameters.AddWithValue("@Path", backupPath);
+                        cmd.Parameters.AddWithValue("@LogicalDataName", logicalDataName);
+                        cmd.Parameters.AddWithValue("@DataPath", dataFilePath);
+                        cmd.Parameters.AddWithValue("@LogicalLogName", logicalLogName);
+                        cmd.Parameters.AddWithValue("@LogPath", logFilePath);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
                 finally
                 {
-                    // Pase lo que pase, volvemos a MULTI_USER
+                    // Restaurar MULTI_USER
                     using (SqlCommand cmd = new SqlCommand($"ALTER DATABASE [{databaseName}] SET MULTI_USER", conn))
                     {
                         cmd.ExecuteNonQuery();
@@ -62,5 +95,6 @@ namespace Services.DAL.Implementations.SqlServer
                 }
             }
         }
+
     }
 }

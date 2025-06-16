@@ -24,13 +24,22 @@ namespace GestionEstacionamiento.WebForms
         protected global::System.Web.UI.WebControls.TextBox txtRuta;
 
         /// <summary>
-        /// Control fuRestore.
+        /// Control fuRestoreUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuRestore;
+        protected global::System.Web.UI.WebControls.FileUpload fuRestoreUsuario;
+
+        /// <summary>
+        /// Control fuRestoreLog.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuRestoreLog;
 
         /// <summary>
         /// Control btnBackup.
