@@ -14,7 +14,7 @@ namespace GestionEstacionamiento.WebForms
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Session.Clear();
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("~/WebForms/Login.aspx");
         }
 
         protected void btnRecalcular_Click(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace GestionEstacionamiento.WebForms
 
         protected void btnRestaurar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/PanelAdministrador.aspx?modo=restaurar");
+            Response.Redirect("~/WebForms/PanelAdministrador.aspx?modo=restaurar");
         }
     }
 }

@@ -39,7 +39,8 @@ namespace GestionEstacionamiento.WebForms
                     {
                         // Redirigir al panel de verificación
                         Session["UsuarioPendiente"] = usuario;
-                        Response.Redirect("~/VerificarIntegridad.aspx");
+                        
+                        Response.Redirect("~/WebForms/VerificarIntegridad.aspx");
                         return;
                     }
                     else

@@ -28,7 +28,7 @@ namespace Services.DAL.Implementations.SqlServer
 
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(
-                "SELECT IdUsuario, UserName, Password, Estado, PhoneNumber FROM Usuario WHERE UPPER(UserName) = UPPER(@UserName)",
+                 "SELECT IdUsuario, UserName, Password, Estado, PhoneNumber, DVH FROM Usuario WHERE UPPER(UserName) = UPPER(@UserName)",
                 CommandType.Text,
                 new SqlParameter("@UserName", username)))
             {
@@ -40,7 +40,8 @@ namespace Services.DAL.Implementations.SqlServer
                         UserName = reader.GetString(1),
                         Password = reader.GetString(2),
                         Estado = reader.GetString(3),
-                        PhoneNumber = reader.IsDBNull(4) ? null : reader.GetString(4)
+                        PhoneNumber = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        DVH = reader.IsDBNull(5) ? null : reader.GetString(5)
                     };
                 }
             }
