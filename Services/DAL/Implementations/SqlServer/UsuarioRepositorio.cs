@@ -156,7 +156,7 @@ namespace Services.DAL.Implementations.SqlServer
         {
             List<Usuario> usuarios = new List<Usuario>();
 
-            string query = "SELECT IdUsuario, UserName, Estado FROM Usuario";
+            string query = "SELECT IdUsuario, UserName, Estado, PhoneNumber, DVH FROM Usuario";
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(query, CommandType.Text))
             {
@@ -168,10 +168,10 @@ namespace Services.DAL.Implementations.SqlServer
                     usuarios.Add(new Usuario
                     {
                         IdUsuario = reader.GetGuid(0),
-
                         UserName = reader.GetString(1),
-
-                        Estado = reader.GetString(2)
+                        Estado = reader.GetString(2),
+                        PhoneNumber = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        DVH = reader.IsDBNull(4) ? null : reader.GetString(4)
                     });
                 }
             }
@@ -232,6 +232,36 @@ namespace Services.DAL.Implementations.SqlServer
                 new SqlParameter("@IdUsuario", idUsuario)
             );
         }
+
+        public void ActualizarDVV(string nombreTabla, string dvv)
+        {
+            SqlHelper.ExecuteNonQuery(
+                @"IF EXISTS (SELECT 1 FROM Integridad WHERE Tabla = @Tabla)
+              UPDATE Integridad SET DVV = @DVV WHERE Tabla = @Tabla
+          ELSE
+              INSERT INTO Integridad (Tabla, DVV) VALUES (@Tabla, @DVV)",
+                CommandType.Text,
+                new SqlParameter("@Tabla", nombreTabla),
+                new SqlParameter("@DVV", dvv)
+            );
+        }
+
+        public string ObtenerDVV(string nombreTabla)
+        {
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(
+                "SELECT DVV FROM Integridad WHERE Tabla = @Tabla",
+                CommandType.Text,
+                new SqlParameter("@Tabla", nombreTabla)))
+            {
+                if (reader.Read())
+                {
+                    return reader.GetString(0);
+                }
+            }
+
+            return null;
+        }
+
 
         public void Add(Usuario obj)
         {

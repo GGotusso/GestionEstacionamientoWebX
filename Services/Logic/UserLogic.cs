@@ -151,28 +151,48 @@ namespace Services.Logic
         /// </summary>
         public void RecalcularDVHUsuariosExistentes()
         {
-            var usuarios = _usuarioRepository.GetAll(); // Este método debe retornar UserName, Password, Estado y PhoneNumber
+            var usuarios = _usuarioRepository.GetAll(); 
+
+            List<string> listaDVH = new List<string>();
 
             foreach (var usuario in usuarios)
             {
-                var usuarioCompleto = _usuarioRepository.GetUsuarioByUsername(usuario.UserName); // Asegurarte de que trae todos los campos
+                var usuarioCompleto = _usuarioRepository.GetUsuarioByUsername(usuario.UserName);
                 usuarioCompleto.DVH = CryptographyService.CalcularDVH(usuarioCompleto);
                 _usuarioRepository.ActualizarDVH(usuarioCompleto.IdUsuario, usuarioCompleto.DVH);
+
+                listaDVH.Add(usuarioCompleto.DVH);
             }
+
+            // CALCULAR Y GUARDAR DVV
+            string dvv = CryptographyService.CalcularDVV(listaDVH);
+
+            _usuarioRepository.ActualizarDVV("Usuario", dvv);
         }
 
         //Error de integridad: Verifica si el DVH de cada usuario es correcto
         public bool HayErroresDeIntegridad()
         {
             var usuarios = _usuarioRepository.GetAll();
+            List<string> listaDVH = new List<string>();
 
             foreach (var usuario in usuarios)
             {
                 var completo = _usuarioRepository.GetUsuarioByUsername(usuario.UserName);
                 string dvh = CryptographyService.CalcularDVH(completo);
+
                 if (completo.DVH != dvh)
                     return true;
+
+                listaDVH.Add(dvh);
             }
+
+            // VERIFICAR DVV
+            string dvvCalculado = CryptographyService.CalcularDVV(listaDVH);
+            string dvvGuardado = _usuarioRepository.ObtenerDVV("Usuario");
+
+            if (dvvCalculado != dvvGuardado)
+                return true;
 
             return false;
         }

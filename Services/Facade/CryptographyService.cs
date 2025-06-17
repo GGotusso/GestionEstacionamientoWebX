@@ -70,11 +70,20 @@ namespace Services.Facade
             return cipherText;
         }
 
+        // Calcula el DVH (Digito Verificador de Hash) para un usuario
         public static string CalcularDVH(Usuario usuario)
         {
             // Concatenás los campos importantes para integridad
             string datos = $"{usuario.UserName}{usuario.Password}{usuario.Estado}{usuario.PhoneNumber}";
             return HashMd5(datos);
+        }
+        // Calcula el DVV a partir de una lista de DVH
+        public static string CalcularDVV(List<string> dvhList)
+        {
+            // Ordenamos por consistencia
+            dvhList.Sort();
+            string concatenado = string.Join("", dvhList);
+            return HashMd5(concatenado);
         }
     }
 }

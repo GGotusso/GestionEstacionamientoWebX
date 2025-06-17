@@ -63,5 +63,19 @@ namespace Services.DAL.Contracts
         void ActualizarDVH(Guid idUsuario, string dvh);
 
 
+        /// <summary>
+        /// Actualiza el DVV (Dígito Verificador Vertical) de la tabla especificada.
+        /// </summary>
+        /// <param name="nombreTabla">Nombre de la tabla (ej: "Usuario").</param>
+        /// <param name="dvv">Valor del DVV calculado.</param>
+        void ActualizarDVV(string nombreTabla, string dvv);
+
+        /// <summary>
+        /// Obtiene el DVV (Dígito Verificador Vertical) guardado para una tabla.
+        /// </summary>
+        /// <param name="nombreTabla">Nombre de la tabla (ej: "Usuario").</param>
+        /// <returns>DVV almacenado como string.</returns>
+        string ObtenerDVV(string nombreTabla);
+
     }
 }
