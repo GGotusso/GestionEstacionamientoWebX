@@ -11,6 +11,19 @@ namespace GestionEstacionamiento.WebForms
 {
     public partial class VerificarIntegridad : System.Web.UI.Page
     {
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                var errores = Session["ErroresIntegridad"] as List<string>;
+                if (errores != null && errores.Count > 0)
+                {
+                    lblTablasAfectadas.Text = $"Tabla{(errores.Count > 1 ? "s" : "")} afectada{(errores.Count > 1 ? "s" : "")}: {string.Join(", ", errores)}";
+                }
+            }
+        }
+
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Session.Clear();

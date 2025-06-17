@@ -177,6 +177,26 @@ namespace Services.Logic
             return false;
         }
 
+        public List<string> ObtenerTablasConErrores()
+        {
+            var errores = new List<string>();
 
+            // Validar tabla Usuario
+            var usuarios = _usuarioRepository.GetAll();
+            foreach (var usuario in usuarios)
+            {
+                var completo = _usuarioRepository.GetUsuarioByUsername(usuario.UserName);
+                string dvh = CryptographyService.CalcularDVH(completo);
+                if (completo.DVH != dvh)
+                {
+                    errores.Add("Usuario");
+                    break;
+                }
+            }
+
+           
+
+            return errores;
+        }
     }
 }

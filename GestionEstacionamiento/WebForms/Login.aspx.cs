@@ -37,9 +37,10 @@ namespace GestionEstacionamiento.WebForms
                 {
                     if (RolesHelper.EsAdministrador(usuario))
                     {
+                        var errores = UserService.ObtenerTablasConErrores();
                         // Redirigir al panel de verificación
                         Session["UsuarioPendiente"] = usuario;
-                        
+                        Session["ErroresIntegridad"] = errores;
                         Response.Redirect("~/WebForms/VerificarIntegridad.aspx");
                         return;
                     }

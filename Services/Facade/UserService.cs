@@ -78,6 +78,9 @@ namespace Services.Facade
             return _userLogic.HayErroresDeIntegridad();
         }
 
-
+        public static List<string> ObtenerTablasConErrores()
+        {
+            return _userLogic.ObtenerTablasConErrores();
+        }
     }
 }
